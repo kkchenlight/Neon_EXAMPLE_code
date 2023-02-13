@@ -3,12 +3,20 @@
  * @Author: kkchen
  * @Email: kkchen.lg@qq.com
  * @Date: 2023-02-08 09:10:09
- * @LastEditTime: 2023-02-08 18:34:58
+ * @LastEditTime: 2023-02-13 09:43:24
  * @LastEditors: kkchen
  */
 #include <iostream>
 
 #include "arm_neon.h"
+
+template <typename T>
+void printarray(T* src, int data_len) {
+  for (int i = 0; i < data_len; i++) {
+    std::cout << src[i] + 0 << " ";
+  }
+  std::cout << std::endl;
+}
 
 template <typename T>
 void initarray(T* src, int data_len) {
@@ -35,7 +43,9 @@ int main(int argc, char** argv) {
   int32x4_t a_neon_int32 = vld1q_s32(a_int32);
   float32x4_t a_neon_fp32 = vld1q_f32(a_fp32);
 
-  std::cout << " int8 neon: ";
+  std::cout << "int8 Vector input is: " << std::endl;
+  printarray<int8_t>(a_int8, 16);
+  std::cout << "int8 Vector neon is: ";
   std::cout << vgetq_lane_s8(a_neon_int8, 0) + 0 << " "
             << vgetq_lane_s8(a_neon_int8, 1) + 0 << " "
             << vgetq_lane_s8(a_neon_int8, 2) + 0 << " "
@@ -53,7 +63,9 @@ int main(int argc, char** argv) {
             << vgetq_lane_s8(a_neon_int8, 14) + 0 << " "
             << vgetq_lane_s8(a_neon_int8, 15) + 0 << " " << std::endl;
 
-  std::cout << "int16 neon: ";
+  std::cout << "int16 Vector input is: " << std::endl;
+  printarray<int8_t>(a_int8, 8);
+  std::cout << "int16 Vector neon is: ";
   std::cout << vgetq_lane_s16(a_neon_int16, 0) << " "
             << vgetq_lane_s16(a_neon_int16, 1) << " "
             << vgetq_lane_s16(a_neon_int16, 2) << " "
@@ -63,40 +75,56 @@ int main(int argc, char** argv) {
             << vgetq_lane_s16(a_neon_int16, 6) << " "
             << vgetq_lane_s16(a_neon_int16, 7) << " " << std::endl;
 
-  std::cout << "int32 neon: ";
+  std::cout << "int32 Vector input is: " << std::endl;
+  printarray<int32_t>(a_int32, 4);
+  std::cout << "int32 Vector neon is: ";
   std::cout << vgetq_lane_s32(a_neon_int32, 0) << " "
             << vgetq_lane_s32(a_neon_int32, 1) << " "
             << vgetq_lane_s32(a_neon_int32, 2) << " "
             << vgetq_lane_s32(a_neon_int32, 3) << " " << std::endl;
 
-  std::cout << " fp32 neon: ";
+  std::cout << "float Vector input is: " << std::endl;
+  printarray<float>(a_fp32, 4);
+  std::cout << "float Vector neon is: ";
   std::cout << vgetq_lane_f32(a_neon_fp32, 0) << " "
             << vgetq_lane_f32(a_neon_fp32, 1) << " "
             << vgetq_lane_f32(a_neon_fp32, 2) << " "
             << vgetq_lane_f32(a_neon_fp32, 3) << " " << std::endl;
+
+  std::cout << std::endl;
+
   std::cout << "<<<<<<<<<<<<<<<< vldq_lane_ test >>>>>>>>>>>>>>>" << std::endl;
-
   float a = 120;
+  std::cout << "Vector A is: " << std::endl;
+  std::cout << vgetq_lane_f32(a_neon_fp32, 0) << " "
+            << vgetq_lane_f32(a_neon_fp32, 1) << " "
+            << vgetq_lane_f32(a_neon_fp32, 2) << " "
+            << vgetq_lane_f32(a_neon_fp32, 3) << " " << std::endl;
   a_neon_fp32 = vld1q_lane_f32(&a, a_neon_fp32, 2);
-
-  std::cout << " fp32 neon: ";
+  std::cout << " After vld1q_lane_f32(&a, a_neon_fp32, 2), Vector A is: "
+            << std::endl;
   std::cout << vgetq_lane_f32(a_neon_fp32, 0) << " "
             << vgetq_lane_f32(a_neon_fp32, 1) << " "
             << vgetq_lane_f32(a_neon_fp32, 2) << " "
             << vgetq_lane_f32(a_neon_fp32, 3) << " " << std::endl;
 
+  std::cout << std::endl;
   std::cout << "<<<<<<<<<<<<<<<< vldq_dup_ test >>>>>>>>>>>>>>>" << std::endl;
-
   float b = 20;
   float32x4_t dup_vec = vld1q_dup_s32(&b);
-  std::cout << " fp32 neon: ";
-  std::cout << vgetq_lane_f32(dup_vec, 0) << " " << vgetq_lane_f32(dup_vec, 1)
-            << " " << vgetq_lane_f32(dup_vec, 2) << " "
-            << vgetq_lane_f32(dup_vec, 3) << " " << std::endl;
+  std::cout << " After vld1q_dup_s32(&b), Vector A is: " << std::endl;
+  std::cout << vgetq_lane_f32(a_neon_fp32, 0) << " "
+            << vgetq_lane_f32(a_neon_fp32, 1) << " "
+            << vgetq_lane_f32(a_neon_fp32, 2) << " "
+            << vgetq_lane_f32(a_neon_fp32, 3) << " " << std::endl;
+  std::cout << std::endl;
 
   std::cout << "<<<<<<<<<<<<<<<< vldq_f32_x2 test >>>>>>>>>>>>>>>" << std::endl;
+
   float32x4x2_t f32x2_vec = vld1q_f32_x2(a_fp32);
-  std::cout << " fp32 neon: ";
+  std::cout << "Vector A is: " << std::endl;
+  printarray<float>(a_fp32, 8);
+  std::cout << " After vld1q_dup_s32(&b), Vector A is: " << std::endl;
   std::cout << vgetq_lane_f32(f32x2_vec.val[0], 0) << " "
             << vgetq_lane_f32(f32x2_vec.val[0], 1) << " "
             << vgetq_lane_f32(f32x2_vec.val[0], 2) << " "
@@ -106,13 +134,17 @@ int main(int argc, char** argv) {
             << vgetq_lane_f32(f32x2_vec.val[1], 2) << " "
             << vgetq_lane_f32(f32x2_vec.val[1], 3) << " " << std::endl;
 
+  std::cout << std::endl;
+
   std::cout << "<<<<<<<<<<<<<<<< vld2q_f32 test >>>>>>>>>>>>>>>" << std::endl;
+  std::cout << "Vector A is " << std::endl;
   float* tmp1 = new float[32];
   for (int i = 0; i < 32; i++) {
     tmp1[i] = i % 2;
   }
+  printarray<float>(tmp1, 8);
   float32x4x2_t tmp1_vec = vld2q_f32(tmp1);
-  std::cout << " fp32 neon: ";
+  std::cout << "After vld2q_f32(tmp1), Vector A is: " << std::endl;
   std::cout << vgetq_lane_f32(tmp1_vec.val[0], 0) << " "
             << vgetq_lane_f32(tmp1_vec.val[0], 1) << " "
             << vgetq_lane_f32(tmp1_vec.val[0], 2) << " "
@@ -121,12 +153,13 @@ int main(int argc, char** argv) {
             << vgetq_lane_f32(tmp1_vec.val[1], 1) << " "
             << vgetq_lane_f32(tmp1_vec.val[1], 2) << " "
             << vgetq_lane_f32(tmp1_vec.val[1], 3) << " " << std::endl;
+  std::cout << std::endl;
 
   std::cout << "<<<<<<<<<<<<<<<< vld2q_lane_f32 test >>>>>>>>>>>>>>>"
             << std::endl;
 
   float32x4x2_t tmp2_vec = vld2q_lane_f32(a_fp32 + 8, tmp1_vec, 1);
-  std::cout << " fp32 neon: ";
+  std::cout << "Vector A is :" << std::endl;
   std::cout << vgetq_lane_f32(tmp2_vec.val[0], 0) << " "
             << vgetq_lane_f32(tmp2_vec.val[0], 1) << " "
             << vgetq_lane_f32(tmp2_vec.val[0], 2) << " "
@@ -135,11 +168,26 @@ int main(int argc, char** argv) {
             << vgetq_lane_f32(tmp2_vec.val[1], 1) << " "
             << vgetq_lane_f32(tmp2_vec.val[1], 2) << " "
             << vgetq_lane_f32(tmp2_vec.val[1], 3) << " " << std::endl;
+  std::cout << "Vector B is :" << std::endl;
+  printarray<float>(a_fp32 + 8, 4);
+  std::cout << "After vld2q_lane_f32(a_fp32 + 8, tmp1_vec, 1), Vector A is :"
+            << std::endl;
+  std::cout << vgetq_lane_f32(tmp2_vec.val[0], 0) << " "
+            << vgetq_lane_f32(tmp2_vec.val[0], 1) << " "
+            << vgetq_lane_f32(tmp2_vec.val[0], 2) << " "
+            << vgetq_lane_f32(tmp2_vec.val[0], 3) << " "
+            << vgetq_lane_f32(tmp2_vec.val[1], 0) << " "
+            << vgetq_lane_f32(tmp2_vec.val[1], 1) << " "
+            << vgetq_lane_f32(tmp2_vec.val[1], 2) << " "
+            << vgetq_lane_f32(tmp2_vec.val[1], 3) << " " << std::endl;
+  std::cout << std::endl;
 
   std::cout << "<<<<<<<<<<<<<<<< vld2q_dup_f32 test >>>>>>>>>>>>>>>"
             << std::endl;
+  std::cout << "Vector A is :" << std::endl;
+  printarray<float>(a_fp32 + 8, 4);
   float32x4x2_t tmp3_vec = vld2q_dup_f32(a_fp32 + 8);
-  std::cout << " fp32 neon: ";
+  std::cout << "After vld2q_dup_f32(a_fp32 + 8), Vector A is :" << std::endl;
   std::cout << vgetq_lane_f32(tmp3_vec.val[0], 0) << " "
             << vgetq_lane_f32(tmp3_vec.val[0], 1) << " "
             << vgetq_lane_f32(tmp3_vec.val[0], 2) << " "
