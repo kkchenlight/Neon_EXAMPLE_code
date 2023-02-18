@@ -3,7 +3,7 @@
  * @Author: kkchen
  * @Email: kkchen.lg@qq.com
  * @Date: 2023-02-11 14:11:31
- * @LastEditTime: 2023-02-11 15:32:23
+ * @LastEditTime: 2023-02-17 19:59:54
  * @LastEditors: kkchen
  */
 #include <iostream>
@@ -131,9 +131,9 @@ int main() {
             << vgetq_lane_u32(tmp1.val[0], 3) + 0 << " " << std::endl
             << vgetq_lane_u32(tmp1.val[1], 2) + 0 << " "
             << vgetq_lane_u32(tmp1.val[1], 3) + 0 << " " << std::endl;
+  cout << endl;
 
   cout << "vzipq_u32 test, zip elements" << endl;
-  cout << endl;
 
   a_neon_u32x4_A = vld1q_u32(a_uint32);
   a_neon_u32x4_B = vld1q_u32(a_uint32 + 4);
@@ -141,7 +141,7 @@ int main() {
   printarray<uint32_t>(a_uint32, 4);
   cout << "Vector B is : " << endl;
   printarray<uint32_t>(a_uint32 + 4, 4);
-  tmp1 = vtrnq_u32(a_neon_u32x4_A, a_neon_u32x4_B);
+  tmp1 = vzipq_u32(a_neon_u32x4_A, a_neon_u32x4_B);
   cout << "zip A and B is: " << endl;
   std::cout << vgetq_lane_u32(tmp1.val[0], 0) + 0 << " "
             << vgetq_lane_u32(tmp1.val[0], 1) + 0 << " "

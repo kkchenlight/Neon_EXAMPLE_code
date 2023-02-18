@@ -3,7 +3,7 @@
  * @Author: kkchen
  * @Email: kkchen.lg@qq.com
  * @Date: 2023-02-08 09:10:09
- * @LastEditTime: 2023-02-13 09:43:24
+ * @LastEditTime: 2023-02-14 09:07:46
  * @LastEditors: kkchen
  */
 #include <iostream>
@@ -111,8 +111,8 @@ int main(int argc, char** argv) {
   std::cout << std::endl;
   std::cout << "<<<<<<<<<<<<<<<< vldq_dup_ test >>>>>>>>>>>>>>>" << std::endl;
   float b = 20;
-  float32x4_t dup_vec = vld1q_dup_s32(&b);
-  std::cout << " After vld1q_dup_s32(&b), Vector A is: " << std::endl;
+  float32x4_t dup_vec = vld1q_dup_f32(&b);
+  std::cout << " After vld1q_dup_f32(&b), Vector A is: " << std::endl;
   std::cout << vgetq_lane_f32(a_neon_fp32, 0) << " "
             << vgetq_lane_f32(a_neon_fp32, 1) << " "
             << vgetq_lane_f32(a_neon_fp32, 2) << " "
@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
   float32x4x2_t f32x2_vec = vld1q_f32_x2(a_fp32);
   std::cout << "Vector A is: " << std::endl;
   printarray<float>(a_fp32, 8);
-  std::cout << " After vld1q_dup_s32(&b), Vector A is: " << std::endl;
+  std::cout << " vld1q_f32_x2(a_fp32), Vector A is: " << std::endl;
   std::cout << vgetq_lane_f32(f32x2_vec.val[0], 0) << " "
             << vgetq_lane_f32(f32x2_vec.val[0], 1) << " "
             << vgetq_lane_f32(f32x2_vec.val[0], 2) << " "

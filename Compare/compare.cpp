@@ -3,7 +3,7 @@
  * @Author: kkchen
  * @Email: kkchen.lg@qq.com
  * @Date: 2023-02-11 11:31:50
- * @LastEditTime: 2023-02-11 11:49:02
+ * @LastEditTime: 2023-02-17 21:06:56
  * @LastEditors: kkchen
  */
 #include <iostream>
@@ -50,8 +50,8 @@ int main() {
             << vgetq_lane_u8(tmp, 3) + 0 << " " << std::endl;
 
   std::cout << std::endl;
-  std::cout << "vcgeq_u8 test Greater than or equal to" << std::endl;
 
+  std::cout << "vcgeq_u8 test Greater than or equal to" << std::endl;
   std::cout << "Vector A is: " << std::endl;
   printarray<uint8_t>(a_uint8, 4);
   std::cout << "Vector B is: " << std::endl;
@@ -80,7 +80,7 @@ int main() {
             << vgetq_lane_u8(tmp, 3) + 0 << " " << std::endl;
 
   tmp = vcltq_u8(a_neon_u8, a_neon_u8_1);
-  std::cout << " A  Great than B is: " << std::endl;
+  std::cout << " A  Less than B is: " << std::endl;
   std::cout << vgetq_lane_u8(tmp, 0) + 0 << " " << vgetq_lane_u8(tmp, 1) + 0
             << " " << vgetq_lane_u8(tmp, 2) + 0 << " "
             << vgetq_lane_u8(tmp, 3) + 0 << " " << std::endl;
