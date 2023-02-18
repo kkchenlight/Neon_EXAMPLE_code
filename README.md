@@ -1,18 +1,18 @@
 # Neon_EXAMPLE_code
-this is a Neon example code for rookie。
+this is a Neon example code for rookie, the contents included in this project are list below:
 
 #### Load&Store(take FP32 for example)
 
-| 函数           | 含义                                                         | 备注 |
-| -------------- | ------------------------------------------------------------ | ---- |
-| vld1q_f32      | 从内存加载float数据到128位的neon寄存器，一次加载4个float     |      |
-| vld1q_lane_f32 | 从内存加载一个数据到neon寄存器中，根据index替换原来寄存器对应index的数据 |      |
-| vld1q_dup_f32  | 从内存加载一个数据a到neon寄存器中 ， 将该neon寄存器中所有位置的值变为a |      |
-| vld1q_f32_x2   | 从内存中加载8个数据，按照顺序依次填充到2个neon寄存器中       |      |
-| vld2q_f32      | 从内存加载8个数据，按照顺序交叉存储到2个neon寄存器中         |      |
+| 函数           | 含义                                                                        | 备注 |
+| -------------- | --------------------------------------------------------------------------- | ---- |
+| vld1q_f32      | 从内存加载float数据到128位的neon寄存器，一次加载4个float                    |      |
+| vld1q_lane_f32 | 从内存加载一个数据到neon寄存器中，根据index替换原来寄存器对应index的数据    |      |
+| vld1q_dup_f32  | 从内存加载一个数据a到neon寄存器中 ， 将该neon寄存器中所有位置的值变为a      |      |
+| vld1q_f32_x2   | 从内存中加载8个数据，按照顺序依次填充到2个neon寄存器中                      |      |
+| vld2q_f32      | 从内存加载8个数据，按照顺序交叉存储到2个neon寄存器中                        |      |
 | vld2q_lane_f32 | 从内存中加载两个数据，根据index，分别存储到2个Neon寄存器中索引为index的位置 |      |
-| vld2q_dup_f32  | 从内存中加载两个数据，分别填充满2个Neon寄存器                |      |
-| vgetq_lane_f32 | 根据index从Neon寄存器中获取对应的值                          |      |
+| vld2q_dup_f32  | 从内存中加载两个数据，分别填充满2个Neon寄存器                               |      |
+| vgetq_lane_f32 | 根据index从Neon寄存器中获取对应的值                                         |      |
 
 #### 算术计算(take s8 and f32 for example)
 
